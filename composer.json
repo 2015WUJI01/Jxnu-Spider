@@ -1,0 +1,21 @@
+{
+    "name": "wuchienkun/jxnu-spider",
+    "description": "关于jwc.jxnu.edu.cn的信息获取器，用于信息验证",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WuChienKun",
+            "email": "wujiankun1998@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "jaeger/querylist": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "JxnuSpider\\": "src/"
+        }
+    }
+}
