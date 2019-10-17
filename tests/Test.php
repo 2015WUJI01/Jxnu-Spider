@@ -29,7 +29,7 @@ if (isset($_POST['captcha']) && $_POST['captcha'])
 <form action="" method="post">
     <input name="viewStatus" type="text" hidden value="<?php echo $primal_verify_data['viewStatus']; ?>">
     <input name="eventValidation" type="text" hidden value="<?php echo $primal_verify_data['eventValidation']; ?>">
-    <img src="http://jwc.jxnu.edu.cn/Portal/<?php echo $primal_verify_data['captchaSrc']; ?>" height="40px;">
+    <img src="https://jwc.jxnu.edu.cn/Portal/<?php echo $primal_verify_data['captchaSrc']; ?>" height="40px;">
     验证码：<input name="captcha" type="text" >
     <button type="submit">提交</button>
 </form>

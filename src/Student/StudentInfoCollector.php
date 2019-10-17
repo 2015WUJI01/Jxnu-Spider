@@ -58,7 +58,7 @@ class StudentInfoCollector
      */
     private static function getFromInfoCheckPage($user_cookie, $info_name_arr)
     {
-        $url = 'http://jwc.jxnu.edu.cn/MyControl/Student_InforCheck.aspx';
+        $url = 'https://jwc.jxnu.edu.cn/MyControl/Student_InforCheck.aspx';
 
         $ql = QueryList::get($url, [], [
             'header' => [
@@ -90,7 +90,7 @@ class StudentInfoCollector
      */
     private static function getFromPhonePage($user_cookie, $info_name_arr)
     {
-        $ql = QueryList::get('http://jwc.jxnu.edu.cn/MyControl/Phone.aspx', [], [
+        $ql = QueryList::get('https://jwc.jxnu.edu.cn/MyControl/Phone.aspx', [], [
             'header' => [
                 'Cookie' => $user_cookie
             ]
@@ -118,7 +118,7 @@ class StudentInfoCollector
      */
     private static function getFromScorePage($user_cookie, $info_name_arr)
     {
-        $url = 'http://jwc.jxnu.edu.cn/MyControl/All_Display.aspx';
+        $url = 'https://jwc.jxnu.edu.cn/MyControl/All_Display.aspx';
         $ql = QueryList::get($url, [
             'UserControl' => 'xfz_cj.ascx',
             'Action' => 'Personal'

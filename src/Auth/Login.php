@@ -4,12 +4,13 @@ namespace JxnuSpider\Auth;
 
 use QL\QueryList;
 use QL\Services\HttpService;
+use GuzzleHttp\Exception\RequestException;
 
 class Login
 {
     public static function getCaptcha()
     {
-        $ql = QueryList::get('http://jwc.jxnu.edu.cn/Portal/LoginAccount.aspx?t=account')
+        $ql = QueryList::get('https://jwc.jxnu.edu.cn/Portal/LoginAccount.aspx?t=account')
             ->removeHead();
 
         {
@@ -39,21 +40,27 @@ class Login
         }
 
         // 模拟登录验证合法性
-        $ql = QueryList::post('http://jwc.jxnu.edu.cn/Portal/LoginAccount.aspx?t=account',[
-            '__EVENTTARGET' => '',
-            '__EVENTARGUMENT' => '',
-            '__LASTFOCUS' => '',
-            '__VIEWSTATE' => $verifyData['viewStatus'],
-            '__EVENTVALIDATION' => $verifyData['eventValidation'],
-            '_ctl0:cphContent:ddlUserType' => $user['type'],
-            '_ctl0:cphContent:txtUserNum' => $user['id'],
-            '_ctl0:cphContent:txtPassword' => $user['pwd'],
-            '_ctl0:cphContent:btnLogin' => '登录',
-            '_ctl0:cphContent:txtCheckCode' => $verifyData['captcha']
-        ])->removeHead();
-
-        {
-            // TODO: 如果访问失败，需要提示或进行处理
+        try {
+            $ql = QueryList::post('https://jwc.jxnu.edu.cn/Portal/LoginAccount.aspx?t=account',[
+                '__EVENTTARGET' => '',
+                '__EVENTARGUMENT' => '',
+                '__LASTFOCUS' => '',
+                '__VIEWSTATE' => $verifyData['viewStatus'],
+                '__EVENTVALIDATION' => $verifyData['eventValidation'],
+                '_ctl0:cphContent:ddlUserType' => $user['type'],
+                '_ctl0:cphContent:txtUserNum' => $user['id'],
+                '_ctl0:cphContent:txtPassword' => $user['pwd'],
+                '_ctl0:cphContent:txtCheckCode' => $verifyData['captcha'],
+                '_ctl0:cphContent:btnLogin' => '登录',
+            ], [
+                'timeout' => 300,
+                'headers' => [
+                    'Referer' => 'https://jwc.jxnu.edu.cn/Portal/LoginAccount.aspx?t=account',
+                ]
+            ])->removeHead();
+        } catch (RequestException $e) {
+            print_r($e->getRequest());
+            echo "Http error";
         }
 
         // 返回结果
