@@ -2,27 +2,27 @@
 
 require __DIR__ . "/../vendor/autoload.php";
 
-use JxnuSpider\Auth\Login;
-use JxnuSpider\Student\StudentInfoCollector as InfoCollector;
+use JxnuSpider\Helper\Jwc;
+use JxnuSpider\Model\Student;
 
-$primal_verify_data = Login::getCaptcha();
+$primal_verify_data = Jwc::getCaptcha();
 
 if (isset($_POST['captcha']) && $_POST['captcha'])
 {
     $user = [
         'id' => '...',
         'pwd' => '...',
-        'type' => '...'
     ];
     $verifyData = [
         'viewStatus' => $_POST['viewStatus'],
         'eventValidation' => $_POST['eventValidation'],
         'captcha' => $_POST['captcha']
     ];
-    $cookie = Login::login($user, $verifyData);
 
-    $user_info = InfoCollector::getInfo($cookie, 'name', 'gender');
-    print_r($user_info);
+    $student = new Student($user, $verifyData);
+    $student->login();
+
+    print_r($student->getInfo());
 }
 ?>
 
